@@ -9,7 +9,6 @@
 //
 
 #import "SVGeocoder.h" 
-#import "JSONKit.h"
 
 #define kSVGeocoderTimeoutInterval 20
 
@@ -276,7 +275,7 @@ typedef NSUInteger SVGeocoderRequestState;
     
     if(self.responseData && self.responseData.length > 0) {
         response = [NSData dataWithData:self.responseData];
-        NSDictionary *responseDict = [response objectFromJSONDataWithParseOptions:JKSerializeOptionNone error:&error];
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&error];
         
         if(!error) {
             NSArray *resultsArray = [responseDict valueForKey:@"results"];
